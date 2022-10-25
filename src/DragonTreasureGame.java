@@ -31,8 +31,10 @@ public class DragonTreasureGame extends PApplet {
         this.textSize(20); //sets the font size for the text
         Room.setProcessing(this);
         PImage testimage = this.loadImage("src\\images\\2.jpg");
+        TreasureRoom.setTreasureBackground(testimage);
+        roomList.add(new TreasureRoom(3));
+        roomList.add(new StartRoom(2, testimage));
         roomList.add(new Room(1, "test text", testimage));
-
     }
 
     public void draw() {
