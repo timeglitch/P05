@@ -19,7 +19,7 @@ public class TreasureRoom extends Room{
         return TREASURE_WARNING;
     }
 
-    public boolean playerCanGrabTreasure(Player p) {
+    public boolean playerCanGrabTreasure() {//Player p) {
         return false; //TODO actually do this
     }
 
