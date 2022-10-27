@@ -19,8 +19,8 @@ public class TreasureRoom extends Room{
         return TREASURE_WARNING;
     }
 
-    public boolean playerCanGrabTreasure() {//Player p) {
-        return false; //TODO actually do this
+    public boolean playerCanGrabTreasure(Player p) {
+        return p.hasKey() && p.getCurrentRoom().equals(this);
     }
 
     public static void setTreasureBackground(processing.core.PImage treasureBackgroundin) {

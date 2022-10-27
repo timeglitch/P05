@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.sound.sampled.Port;
 import java.util.Random;
 import processing.core.PImage;
 
@@ -10,6 +11,9 @@ public class DragonTreasureGame extends PApplet {
     private ArrayList<Room>roomList;
     private File roomInfo;
     private File mapInfo;
+    private ArrayList<Character>characters;
+    private boolean isDragonTurn;
+    private int gameState;
     public static void main(String[] args) {
         
         PApplet.main("DragonTreasureGame");
@@ -27,6 +31,9 @@ public class DragonTreasureGame extends PApplet {
         roomList = new ArrayList<Room>();
         roomInfo = new File("src\\roominfo.txt");
         mapInfo = new File("src\\map.txt");
+        characters = new ArrayList<Character>();
+        isDragonTurn = false;
+        gameState = 0;
 
         //init pApplet
         this.getSurface().setTitle("Dragon Treasure Adventure"); // sets the title of the window
@@ -40,8 +47,10 @@ public class DragonTreasureGame extends PApplet {
         Room.setProcessing(this);
         //image loading
         PortalRoom.setPortalImage(this.loadImage("src\\images\\portal.png"));
+        TreasureRoom.setTreasureBackground(this.loadImage("src\\images\\treasure.jpg"));
         loadRoomInfo();
         loadMap();
+        loadCharacters();
 
         /*
         PImage testimage = this.loadImage("src\\images\\2.jpg");
@@ -53,7 +62,99 @@ public class DragonTreasureGame extends PApplet {
     }
 
     public void draw() {
-        roomList.get(0).draw();
+        //characters.get(2).getCurrentRoom().draw();
+        Player p;
+        Dragon d;
+        Character k;
+        int a = 0;
+        int b = 0;
+        int c = 0;
+        for(int i = 0; i < characters.size(); i++) {
+          if(characters.get(i) instanceof Player) {
+             a = i;
+          }
+          if(characters.get(i) instanceof Dragon){
+            b = i;
+          }
+          c = i;
+        }
+        p = (Player)characters.get(a);
+        d = (Dragon)characters.get(b);
+        k = characters.get(c);
+
+
+
+        Room current = p.getCurrentRoom();
+        ArrayList<Room> adj = current.getAdjacentRooms();
+        current.draw();
+        //check for nearby warnings
+        if (p.isPortalNearby()) {
+          System.out.println(PortalRoom.getPortalWarning());
+        }
+        if (p.isTreasureNearby()) {
+          System.out.println(TreasureRoom.getTreasureWarning());
+        }
+        if (p.isDragonNearby(d)) {
+          System.out.println(Dragon.getDragonWarning());
+        }
+        if(p.getCurrentRoom().equals(k.getCurrentRoom()) && p.hasKey()) {
+          p.obtainKey();
+          System.out.println("KEY OBTAINED");
+        }
+        if(p.teleport()) {
+          p.setCurrentRoom(((PortalRoom)p.getCurrentRoom()).getTeleportLocation());
+        }
+
+        if(isDragonTurn) {
+          Room picked = d.pickRoom();
+          if(d.canMoveTo(picked)) {
+            d.changeRoom(picked);
+            isDragonTurn = false;
+          }
+        }
+
+        if(p.getCurrentRoom() instanceof TreasureRoom && p.hasKey()) {
+          gameState = 1;
+          System.out.println("You Win");
+        }
+        if(p.getCurrentRoom().equals(d.getCurrentRoom())) {
+          gameState = 2;
+          System.out.println(Dragon.getDragonWarning());
+          System.out.println("You Lose");
+
+        }
+    }
+
+    @Override
+    public void keyPressed() {
+      Player p;
+      Dragon d;
+      Character k;
+      int a = 0;
+      int b = 0;
+      int c = 0;
+      for(int i = 0; i < characters.size(); i++) {
+        if(characters.get(i) instanceof Player) {
+            a = i;
+        }
+        if(characters.get(i) instanceof Dragon){
+          b = i;
+        }
+        c = i;
+      }
+      p = (Player)characters.get(a);
+      d = (Dragon)characters.get(b);
+      k = characters.get(c);
+
+      if (gameState != 0) { 
+        return;
+      }
+      //TODO work on from here
+      
+      if(p.canMoveTo(destination))) {
+
+      }
+
     }
 
      /** Loads in room info using the file stored in roomInfo
@@ -162,5 +263,12 @@ public class DragonTreasureGame extends PApplet {
     int indexToEdit = roomList.indexOf(new Room(id,"dummy", null));
     Room toEdit = roomList.get(indexToEdit); 
     return toEdit;
+  }
+
+  private void loadCharacters() {
+    System.out.println("Adding characters...");
+    characters.add(new Character(getRoomByID(5),"KEYHOLDER"));
+    characters.add(new Player(getRoomByID(1)));
+    characters.add(new Dragon(getRoomByID(9)));
   }
 }
