@@ -149,9 +149,17 @@ public class DragonTreasureGame extends PApplet {
       if (gameState != 0) { 
         return;
       }
-      //TODO work on from here
+      Room matchRoom = new Room(key, null, null);
+      int movetoindex = roomList.indexOf(matchRoom);
+      if(movetoindex < 0) {
+        System.out.println("Pick a valid room");;
+      }
+
+      Room destination = roomList.get(movetoindex);
       
-      if(p.canMoveTo(destination))) {
+      if(p.canMoveTo(destination)) {
+        p.setCurrentRoom(destination);
+        isDragonTurn = true;
 
       }
 
