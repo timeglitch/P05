@@ -1,3 +1,14 @@
+//////////////// FILE HEADER (INCLUDE IN EVERY FILE) //////////////////////////
+//
+// Title:    Project 5
+// Course:   CS 300 Fall 2022
+//
+// Author:   Frank Zhang
+// Email:    fjzhang@wisc.edu
+// Lecturer: Mouna Kacem
+//
+
+
 import processing.core.PApplet;
 import java.io.File;
 import java.io.IOException;
