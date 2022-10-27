@@ -55,8 +55,8 @@ public class DragonTreasureGame extends PApplet {
     try {
       // init variables
       roomList = new ArrayList<Room>();
-      roomInfo = new File("src\\roominfo.txt");
-      mapInfo = new File("src\\map.txt");
+      roomInfo = new File("roominfo.txt");
+      mapInfo = new File("map.txt");
       characters = new ArrayList<Character>();
       isDragonTurn = false;
       gameState = 0;
