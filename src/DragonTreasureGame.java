@@ -59,6 +59,7 @@ public class DragonTreasureGame extends PApplet {
 
     } catch (Exception e) {
       e.printStackTrace();
+      throw e;
     }
 
     /*
