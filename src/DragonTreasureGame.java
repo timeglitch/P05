@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.management.RuntimeErrorException;
 import javax.sound.sampled.Port;
 import java.util.Random;
 import processing.core.PImage;
@@ -27,30 +29,36 @@ public class DragonTreasureGame extends PApplet {
 
     @Override
     public void setup() {
-        //init variables
-        roomList = new ArrayList<Room>();
-        roomInfo = new File("src\\roominfo.txt");
-        mapInfo = new File("src\\map.txt");
-        characters = new ArrayList<Character>();
-        isDragonTurn = false;
-        gameState = 0;
+      try{
+          //init variables
+          roomList = new ArrayList<Room>();
+          roomInfo = new File("src\\roominfo.txt");
+          mapInfo = new File("src\\map.txt");
+          characters = new ArrayList<Character>();
+          isDragonTurn = false;
+          gameState = 0;
 
-        //init pApplet
-        this.getSurface().setTitle("Dragon Treasure Adventure"); // sets the title of the window
-        this.imageMode(PApplet.CORNER); //Images are drawn using the x,y-coordinate
-        //as the top-left corner
-        this.rectMode(PApplet.CORNERS); //When drawing rectangles interprets args
-        //as top-left corner and bottom-right corner respectively
-        this.focused = true; // window will be active upon running program
-        this.textAlign(CENTER); // sets the text alignment to center
-        this.textSize(20); //sets the font size for the text
-        Room.setProcessing(this);
-        //image loading
-        PortalRoom.setPortalImage(this.loadImage("src\\images\\portal.png"));
-        TreasureRoom.setTreasureBackground(this.loadImage("src\\images\\treasure.jpg"));
-        loadRoomInfo();
-        loadMap();
-        loadCharacters();
+          //init pApplet
+          this.getSurface().setTitle("Dragon Treasure Adventure"); // sets the title of the window
+          this.imageMode(PApplet.CORNER); //Images are drawn using the x,y-coordinate
+          //as the top-left corner
+          this.rectMode(PApplet.CORNERS); //When drawing rectangles interprets args
+          //as top-left corner and bottom-right corner respectively
+          this.focused = true; // window will be active upon running program
+          this.textAlign(CENTER); // sets the text alignment to center
+          this.textSize(20); //sets the font size for the text
+          Room.setProcessing(this);
+          //image loading
+          loadRoomInfo();
+          loadMap();
+          loadCharacters();
+          PortalRoom.setPortalImage(this.loadImage("src\\images\\portal.png"));
+          TreasureRoom.setTreasureBackground(this.loadImage("src\\images\\treasure.jpg"));
+          
+      }
+      catch (Exception e) {
+        e.printStackTrace();
+      }
 
         /*
         PImage testimage = this.loadImage("src\\images\\2.jpg");
@@ -97,7 +105,7 @@ public class DragonTreasureGame extends PApplet {
         if (p.isDragonNearby(d)) {
           System.out.println(Dragon.getDragonWarning());
         }
-        if(p.getCurrentRoom().equals(k.getCurrentRoom()) && p.hasKey()) {
+        if(p.getCurrentRoom().equals(k.getCurrentRoom()) && !p.hasKey()) {
           p.obtainKey();
           System.out.println("KEY OBTAINED");
         }

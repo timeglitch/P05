@@ -22,7 +22,7 @@ public class Room {
 
     }
 
-     public int getId() {
+     public int getID() {
         return ID;
      }
 
@@ -47,10 +47,10 @@ public class Room {
      }
 
      public boolean equals(Object other) {
-        return (other instanceof Room && ((Room) other).getId() == ID);
+        return (other instanceof Room && ((Room) other).getID() == ID);
      }
 
-     public String roomString() {
+     private String roomString() {
         return Integer.toString(ID) + ": " + description;
      }
 
@@ -59,7 +59,7 @@ public class Room {
         String out = "";
         out = out + this.roomString() + "\n Adjacent Rooms:";
         for (int i = 0; i < adjRooms.size(); i++) {
-            out = out + " <" + adjRooms.get(i).getId() + ">";
+            out = out + " <" + adjRooms.get(i).getID() + ">";
         }
         return out;
      }
