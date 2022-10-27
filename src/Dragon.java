@@ -21,6 +21,11 @@ public class Dragon extends Character implements Moveable {
         }
     }
 
+    
+    /** changes rooms
+     * @param destination to go to
+     * @return boolean is successful,
+     */
     public boolean changeRoom(Room destination) {
         if(canMoveTo(destination)) {
             super.setCurrentRoom(destination);
@@ -29,19 +34,40 @@ public class Dragon extends Character implements Moveable {
         return false;
     }
 
+    
+    /** 
+     * checks if dest is adjacent
+     * @param destination to go to
+     * @return boolean result
+     */
     public boolean canMoveTo(Room destination) {
             return super.getAdjacentRooms().contains(destination);
     }
     
+    
+    /** 
+     * picks random room
+     * @return Room to move to
+     */
     public Room pickRoom() {
         ArrayList<Room> adj = super.getAdjacentRooms();
         return adj.get(randGen.nextInt(adj.size()));
     }
 
+    
+    /** 
+     * getter
+     * @return String dragon warning
+     */
     public static String getDragonWarning() {
         return DRAGON_WARNING;
     }
 
+    
+    /** 
+     * getter
+     * @return String to print out
+     */
     public static String getDragonEncounter() {
         return DRAGON_ENCOUNTER;
     }

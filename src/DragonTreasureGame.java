@@ -17,17 +17,28 @@ public class DragonTreasureGame extends PApplet {
   private boolean isDragonTurn;
   private int gameState;
 
+  
+  /** 
+   * runs programs
+   * @param args
+   */
   public static void main(String[] args) {
 
     PApplet.main("DragonTreasureGame");
 
   }
 
+  /**
+   * sets frame size
+   */
   @Override
   public void settings() {
     size(800, 600);
   }
 
+  /**
+   * init vars, set window size
+   */
   @Override
   public void setup() {
     try {
@@ -72,6 +83,10 @@ public class DragonTreasureGame extends PApplet {
      */
   }
 
+  /**
+   * main game loop
+   * draw things
+   */
   public void draw() {
 
     // characters.get(2).getCurrentRoom().draw();
@@ -129,12 +144,15 @@ public class DragonTreasureGame extends PApplet {
     }
     if (p.getCurrentRoom().equals(d.getCurrentRoom())) {
       gameState = 2;
-      System.out.println(Dragon.getDragonWarning());
+      System.out.println(Dragon.getDragonEncounter());
       System.out.println("You Lose");
 
     }
   }
 
+  /**
+   * tkae key inputs
+   */
   @Override
   public void keyPressed() {
     Player p;
@@ -301,6 +319,9 @@ public class DragonTreasureGame extends PApplet {
     return toEdit;
   }
 
+  /**
+   * loads characters in in any order
+   */
   private void loadCharacters() {
     System.out.println("Adding characters...");
     characters.add(new Character(getRoomByID(5), "KEYHOLDER"));
