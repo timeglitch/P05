@@ -149,13 +149,25 @@ public class DragonTreasureGame extends PApplet {
       if (gameState != 0) { 
         return;
       }
-      Room matchRoom = new Room(key, null, null);
-      int movetoindex = roomList.indexOf(matchRoom);
+      
+      int movetoindex = -1;
+      ArrayList<Room> adj = p.getAdjacentRooms();
+      for (int i = 0; i < adj.size(); i++) {
+        Room adjRoom = adj.get(i);
+        //System.out.println(key);
+        //System.out.println(new Room(Integer.valueOf(String.valueOf(key)), null, null).toString());
+        if(new Room(Integer.valueOf(String.valueOf(key)), null, null).equals(adjRoom)) {
+          movetoindex = i;
+        }
+      }
+      //System.out.println(movetoindex);
+
       if(movetoindex < 0) {
-        System.out.println("Pick a valid room");;
+        System.out.println("Pick a valid room");
+        return;
       }
 
-      Room destination = roomList.get(movetoindex);
+      Room destination = adj.get(movetoindex);
       
       if(p.canMoveTo(destination)) {
         p.setCurrentRoom(destination);

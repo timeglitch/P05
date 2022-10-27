@@ -37,7 +37,7 @@ public class Player extends Character implements Moveable {
     }
     
     public boolean teleport() {
-        return getCurrentRoom() instanceof PortalRoom;
+        return getCurrentRoom() instanceof PortalRoom; //TODO finish teleportation?
     }
 
     public boolean isPortalNearby() {
