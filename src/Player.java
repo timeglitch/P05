@@ -62,5 +62,7 @@ public class Player extends Character implements Moveable {
         return false;
     }
 
-    // TODO public boolean isDragonNearby(Dragon d) { }
+    public boolean isDragonNearby(Dragon d) {
+        return super.getAdjacentRooms().contains(d.getCurrentRoom());
+    }
 }
